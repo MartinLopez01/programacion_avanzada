@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Holaaa</title>
 
     <style type="text/css">
-canvas{
-    background-color: rgb(121, 14, 170);
-}
+        canvas {
+            background-color: rgb(121, 14, 170)
+        }
     </style>
 </head>
+
 <body>
 
     <canvas id="my_canvas" width="500" height="500">
@@ -20,20 +22,20 @@ canvas{
         const ctx = my_canvas.getContext("2d")
 
 
-        ctx.strokeRect(20, 20, 100, 100);
+        ctx.strokeRect(20, 20, 100, 100)
 
-        ctx.fillStyle ="rgba(12, 151, 42, 0.541)" ;
+        ctx.fillStyle = "rgba(12, 151, 42, 0.541)"
         ctx.fillRect(100, 100, 100, 100)
 
-        ctx.fillStyle = "rgba(23, 201, 170, 0.541)";
+        ctx.fillStyle = "rgba(23, 201, 170, 0.541)"
         ctx.fillRect(180, 180, 100, 100)
 
-        ctx.fillStyle = "rgba(86, 171, 16, 0.841)";
+        ctx.fillStyle = "rgba(86, 171, 16, 0.841)"
         ctx.fillRect(260, 260, 100, 100)
 
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "blue";
-        ctx.strokeRect(320, 320, 100, 100);
+        ctx.lineWidth = 5
+        ctx.strokeStyle = "blue"
+        ctx.strokeRect(320, 320, 100, 100)
 
         ctx.beginPath()
         ctx.moveTo(400, 100)
@@ -48,6 +50,21 @@ canvas{
         ctx.closePath()
         ctx.stroke()
         ctx.fill()
+
+        
+        ctx.beginPath()
+        ctx.arc(100, 300, 60, 0, 2 * Math.PI)
+        ctx.fillStyle = "rgb(22, 43, 136)"
+        ctx.strokeStyle = "black"
+        ctx.stroke()
+        ctx.fill()
+        
+        
+        ctx.beginPath()
+        ctx.arc(100, 300, 40, 0.4, .9 * Math.PI)
+        ctx.strokeStyle = "red"
+        ctx.stroke()
     </script>
 </body>
+
 </html>
