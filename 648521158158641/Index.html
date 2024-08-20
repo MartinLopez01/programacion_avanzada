@@ -51,19 +51,26 @@
         ctx.stroke()
         ctx.fill()
 
-        
         ctx.beginPath()
         ctx.arc(100, 300, 60, 0, 2 * Math.PI)
         ctx.fillStyle = "rgb(22, 43, 136)"
         ctx.strokeStyle = "black"
         ctx.stroke()
         ctx.fill()
-        
-        
+
         ctx.beginPath()
         ctx.arc(100, 300, 40, 0.4, .9 * Math.PI)
         ctx.strokeStyle = "red"
         ctx.stroke()
+
+        ctx.fillStyle = "white"
+        ctx.font = "31px Jokerman"
+        ctx.fillText("Hola Mundo", 180, 49)
+        ctx.strokeStyle = "black"
+        ctx.font = "30px Jokerman"
+        ctx.strokeText("Hola Mundo", 180, 50)
+
+
     </script>
 </body>
 
