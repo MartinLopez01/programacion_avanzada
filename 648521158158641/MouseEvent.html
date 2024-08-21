@@ -17,25 +17,35 @@
     <script type="text/javascript">
         const my_canvas = document.getElementById('my_canvas')
         const ctx = my_canvas.getContext("2d")
-        ctx.beginPath()
-    
+        
         
         my_canvas.addEventListener("click",function(e){
-       
+           
                 ctx.beginPath()
                 ctx.arc(e.x,e.y, 60, 0, 2 * Math.PI)
-                ctx.fillStyle = "blue"
                 ctx.strokeStyle = "black"
                 ctx.stroke()
                 ctx.fill()
 
-            
+           
             console.log(e)
             
         })
         
-        
-
+        my_canvas.addEventListener("mouseover",function(e){
+            function getRandomColor() {
+                var trans = '0.5'; 
+                var color = 'rgba(';
+                for (var i = 0; i < 3; i++) {
+                  color += Math.floor(Math.random() * 255) + ',';
+                }
+                color += trans + ')';
+                return color;
+              }
+            ctx.fillStyle = getRandomColor()
+            console.log(e)
+        })
+       
 
     </script>
 
