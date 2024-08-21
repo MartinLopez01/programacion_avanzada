@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse</title>
+    <style type="text/css">
+        canvas {
+            background-color: rgb(128, 13, 118)
+        }
+    </style>
+
+</head>
+<body>
+    <canvas id="my_canvas" width="600" height="600">
+    </canvas>
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext("2d")
+        ctx.beginPath()
+    
+        
+        my_canvas.addEventListener("click",function(e){
+       
+                ctx.beginPath()
+                ctx.arc(e.x,e.y, 60, 0, 2 * Math.PI)
+                ctx.fillStyle = "blue"
+                ctx.strokeStyle = "black"
+                ctx.stroke()
+                ctx.fill()
+
+            
+            console.log(e)
+            
+        })
+        
+        
+
+
+    </script>
+
+</body>
+</html>
