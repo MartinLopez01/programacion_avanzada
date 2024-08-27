@@ -33,10 +33,6 @@
 
 
         document.addEventListener("keydown", function (e) {
-
-
-
-
             switch (e.keyCode) {
                 case 87:
                     y -= 10
@@ -51,9 +47,13 @@
                     x += 10
                     break;
             }
+            ctx.fillStyle = 'rgb(128, 13, 118)'
+            ctx.fillRect(0, 0, 600, 600)
             ctx.fillStyle = getRandomColor()
             ctx.fillRect(x, y, 50, 50)
             ctx.strokeStyle = "black"
+            
+            
             /*
             var x = Math.random() * 500
             var y = Math.random() * 500
