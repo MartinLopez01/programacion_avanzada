@@ -15,8 +15,8 @@
     <script type="text/javascript">
         const my_canvas = document.getElementById('my_canvas')
         const ctx = my_canvas.getContext("2d")
-
-        var figura = 1;
+        let drawing = false
+        let figura = 1;
 
         function getRandomColor() {
             var trans = '0.7';
@@ -27,14 +27,34 @@
             color += trans + ')';
             return color;
         }
+        function punto(x, y) {
+            ctx.beginPath()
+            ctx.arc(x, y, 5, 0, 2 * Math.PI)
+            ctx.fillStyle = "black"
+            ctx.fill()
+        }
+        my_canvas.addEventListener('mousedown', function(e) {
+            drawing = true
+            
+        })
 
+       
         my_canvas.addEventListener('mousemove', function(e) {
+            if (drawing) {
+                punto(e.x, e.y)
+            }
+            /*
             ctx.beginPath()
             ctx.arc(e.x, e.y, 5, 0, 2 * Math.PI)
             ctx.stroke()
             ctx.fillStyle = "black"
             ctx.fill()
+            */
         });
+
+        my_canvas.addEventListener('mouseup', function(e) {
+            drawing = false
+        })
 
         my_canvas.addEventListener("mouseover", function(e) {
             ctx.fillStyle = getRandomColor()
@@ -61,6 +81,7 @@
             }
             console.log(e)
         })
+      
     </script>
 </body>
 </html>
