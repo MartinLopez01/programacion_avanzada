@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
         }
     </style>
 </head>
+
 <body>
     <canvas id="my_canvas" width="600" height="600"></canvas>
     <script type="text/javascript">
@@ -24,14 +26,22 @@
             color += trans + ')';
             return color;
         }
-        document.addEventListener("keydown",function(e){
-           var x = Math.random() * 500
-           var y = Math.random() * 500
+        document.addEventListener("keydown", function (e) {
+            var x = Math.random() * 500
+            var y = Math.random() * 500
+
             ctx.fillStyle = getRandomColor()
-                ctx.fillRect(x, y, 50, 50)
-                ctx.strokeStyle = "black"
+            ctx.fillRect(x, y, 50, 50)
+            ctx.strokeStyle = "black"
+            
+            ctx.fillStyle = "black"
+            ctx.font = "31px Jokerman"
+           ctx.fillText(e.key, x+ 15, y+35)
+           
+            console.log(e)
         })
 
     </script>
 </body>
+
 </html>
