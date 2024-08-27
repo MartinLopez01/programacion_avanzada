@@ -26,7 +26,35 @@
             color += trans + ')';
             return color;
         }
+
+
+        var x = 300
+        var y = 300
+
+
         document.addEventListener("keydown", function (e) {
+
+
+
+
+            switch (e.keyCode) {
+                case 87:
+                    y -= 10
+                    break;
+                case 83:
+                    y += 10
+                    break;
+                case 65:
+                    x -= 10
+                    break;
+                case 68:
+                    x += 10
+                    break;
+            }
+            ctx.fillStyle = getRandomColor()
+            ctx.fillRect(x, y, 50, 50)
+            ctx.strokeStyle = "black"
+            /*
             var x = Math.random() * 500
             var y = Math.random() * 500
 
@@ -37,7 +65,7 @@
             ctx.fillStyle = "black"
             ctx.font = "31px Jokerman"
            ctx.fillText(e.key, x+ 15, y+35)
-           
+           */
             console.log(e)
         })
 
