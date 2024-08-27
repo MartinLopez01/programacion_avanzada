@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teclado</title>
+    <style type="text/css">
+        canvas {
+            background-color: rgb(128, 13, 118);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="my_canvas" width="600" height="600"></canvas>
+    <script type="text/javascript">
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext("2d")
+        function getRandomColor() {
+            var trans = '0.7';
+            var color = 'rgba(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            color += trans + ')';
+            return color;
+        }
+        document.addEventListener("keydown",function(e){
+           var x = Math.random() * 500
+           var y = Math.random() * 500
+            ctx.fillStyle = getRandomColor()
+                ctx.fillRect(x, y, 50, 50)
+                ctx.strokeStyle = "black"
+        })
+
+    </script>
+</body>
+</html>
