@@ -14,6 +14,7 @@
         const ctx = my_canvas.getContext("2d")
         var x = 300
         var y = 300
+        var velocidad = 1
         var direccion = ""
         function getRandomColor() {
             var trans = '0.7';
@@ -24,71 +25,94 @@
             color += trans + ')';
             return color;
         }
-        
+
 
         document.addEventListener("keydown", function (e) {
             switch (e.keyCode) {
                 case 87:
                 direccion = "up"
-                   
-                    break;
+                
+                break;
                 case 83:
-                direccion = "down"
-                    
+                    direccion = "down"
+
                     break;
                 case 65:
                 direccion = "left"
-                    
-                    break;
+
+                break;
                 case 68:
                 direccion = "rigt"
-                    
-                    break;
+                
+                break;
+                case 32:
+                velocidad += 1
+                
+                break;  
+                case 66:
+                velocidad -= 1
+                
+                break;  
             }
-        
+            
+            console.log(e)
         })
 
-        function update(){
-            switch (direccion) {
-            case "up":
-                y -= 10
-                if(y === 0){
-                    y=600
-                }
-                break;
-            case "down":
-                y += 10
-                if(y === 600){
-                    y=0
-                }
-                break;
-            case "left":
-                x -= 10
-                if(x === 0){
-                    x=600
-                }
-                break;
-            case "rigt":
-                x += 10
-                if(x === 600){
-                    x=0
-                }
-                break;
-        }
-        }
-        
+        const adiv = document.getElementById('mydiv');
+        let leftpos = 0;
 
-       function pintar(){
-        ctx.fillStyle = 'rgb(128, 13, 118)'
-        ctx.fillRect(0, 0, 600, 600)
-        ctx.fillStyle = getRandomColor()
-        ctx.fillRect(x, y, 50, 50)
-        ctx.strokeStyle = "black"
-       update()
+       
+
+        requestAnimationFrame(movediv);
+        function update() {
+            switch (direccion) {
+                case "up":
+                    y -= velocidad
+                    if (y <= 0) {
+                        y = 600
+                    }
+                    break;
+                case "down":
+                    y += velocidad
+                    if (y >= 600) {
+                        y = 0
+                    }
+                    break;
+                case "left":
+                    x -= velocidad
+                    if (x <= 0) {
+                        x = 600
+                    }
+                    break;
+                case "rigt":
+                    x += velocidad
+                    if (x >= 600) {
+                        x = 0
+                    }
+                    break;
+            }
+        }
+        function movediv(timestamp) {
+            leftpos += 5;
+            adiv.style.left = leftpos + 'px';
+            requestAnimationFrame(movediv);
+        }
+        function pintar() {
+            ctx.fillStyle = 'rgb(128, 13, 118)'
+            ctx.fillRect(0, 0, 600, 600)
+            ctx.fillStyle = getRandomColor()
+            ctx.fillRect(x, y, 50, 50)
+            ctx.strokeStyle = "black"
+            update()
+            requestAnimationFrame(pintar);
+            ctx.fillStyle = "black" 
+            ctx.strokeStyle = "black"
+            ctx.fillText("Velocidad: " + velocidad, 280, 49)
+            ctx.font = "30px Jokerman"
+
+        }
         requestAnimationFrame(pintar);
 
-    }
-    requestAnimationFrame(pintar);
 
     </script>
 </body>
