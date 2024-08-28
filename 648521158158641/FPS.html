@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPS</title>
+</head>
+
+<body>
+    <canvas id="my_canvas" width="600" height="600"></canvas>
+    <script>
+        const my_canvas = document.getElementById('my_canvas')
+        const ctx = my_canvas.getContext("2d")
+        var x = 300
+        var y = 300
+        var direccion = ""
+        function getRandomColor() {
+            var trans = '0.7';
+            var color = 'rgba(';
+            for (var i = 0; i < 3; i++) {
+                color += Math.floor(Math.random() * 255) + ',';
+            }
+            color += trans + ')';
+            return color;
+        }
+        
+
+        document.addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                case 87:
+                direccion = "up"
+                   
+                    break;
+                case 83:
+                direccion = "down"
+                    
+                    break;
+                case 65:
+                direccion = "left"
+                    
+                    break;
+                case 68:
+                direccion = "rigt"
+                    
+                    break;
+            }
+        
+        })
+
+        function update(){
+            switch (direccion) {
+            case "up":
+                y -= 10
+                break;
+            case "down":
+                y += 10
+                break;
+            case "left":
+                x -= 10
+                break;
+            case "rigt":
+                x += 10
+                break;
+        }
+        }
+        
+
+       function pintar(){
+        ctx.fillStyle = 'rgb(128, 13, 118)'
+        ctx.fillRect(0, 0, 600, 600)
+        ctx.fillStyle = getRandomColor()
+        ctx.fillRect(x, y, 50, 50)
+        ctx.strokeStyle = "black"
+       update()
+        requestAnimationFrame(pintar);
+
+    }
+    requestAnimationFrame(pintar);
+
+    </script>
+</body>
+
+</html>
