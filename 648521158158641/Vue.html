@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suma</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Holaa: {{ message }}</h1>
+    <input v-model="message" placeholder="Escribe" />
+    <button @click="count++">
+      Tocame : {{ count }}
+    </button>
+
+    <h1>Suma</h1>
+    <input v-model.number="num1" type="number" placeholder="Número 1" />
+    <input v-model.number="num2" type="number" placeholder="Número 2" />
+    
+    <button @click="sumar">Sumar</button>
+    
+    <h1>La suma es: {{ resultado }}</h1>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        const count = ref(0)
+        const message = ref('')
+        const num1 = ref(0)
+        const num2 = ref(0)
+        const resultado = ref(0)
+
+        const sumar = () => {
+          resultado.value = num1.value + num2.value
+        }
+
+        return {
+          count,
+          message,
+          num1,
+          num2,
+          resultado,
+          sumar
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
