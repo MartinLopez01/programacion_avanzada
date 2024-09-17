@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Acceder</h1>
+        <div>
+            <form @onSumit.preventDefault()="">
+
+                <fieldset>
+                    <h2>Correo</h2>
+                    <input v-model="email" placeholder="email" />
+                </fieldset>
+                
+            </form>
+            <fieldset>
+
+                <h2>Contraseña</h2>
+                <input v-model="password" type="password" placeholder="Contraseña" />
+            </fieldset>
+            
+            <button @click="login">Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    email: '',
+                    password: ''
+                };
+            },
+            methods: {
+                async login() {
+                    try {
+                        const archivo = await fetch('usuario.json');
+                        const email = await archivo.json();
+
+
+                        const usuarioValido = email.map(user => {
+                            if (user.usuario === this.usuario && user.password === this.password) {
+                                return true;
+                            }
+                            return false;
+                        }).includes(true);
+
+                        if (usuarioValido) {
+                           alert('Login exitoso!')
+
+
+                        } else {
+                            alert('Usuario o contraseña incorrectos')
+                        }
+                    } catch (error) {
+                        console.error('Error al cargar el archivo JSON', error);
+                        this.mensaje = 'Error al procesar el login';
+                    }
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+
+</html>
