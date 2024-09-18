@@ -1,32 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
-
 <body>
     <div id="app">
         <h1>Acceder</h1>
-        <div>
-            <form @onSumit.preventDefault()="">
-
+        <div v-if="!isLoggedIn">
+            <form @submit.prevent="login">
                 <fieldset>
                     <h2>Correo</h2>
-                    <input v-model="email" placeholder="email" />
+                    <input v-model="email" type="email" placeholder="email" />
                 </fieldset>
-                
-            </form>
-            <fieldset>
 
-                <h2>Contraseña</h2>
-                <input v-model="password" type="password" placeholder="Contraseña" />
-            </fieldset>
-            
-            <button @click="login">Iniciar Sesión</button>
+                <fieldset>
+                    <h2>Contraseña</h2>
+                    <input v-model="password" type="password" placeholder="Contraseña" />
+                </fieldset>
+
+                <button type="submit">Iniciar Sesión</button>
+               
+            </form>
+        </div>
+
+        <div v-else>
+            <h2>Bienvenido, {{ email }}</h2>
+
+                <h2>Usuarios registrados</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Correo</th>
+                            <th>Contraseña</th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Genero</th>
+                            <th>Balance</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="usuario in usuarios" :key="usuario.email">
+                            <td>{{ usuario.email }}</td>
+                            <td>{{ usuario.password }}</td>
+                            <td>{{ usuario.name }}</td>
+                            <td>{{ usuario.age }}</td>
+                            <td>{{ usuario.gender }}</td>
+                            <td>{{ usuario.balance }}</td>
+                            <td>
+                                <button @click="">Editar</button>
+                                <button @click="">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
 
@@ -35,40 +65,49 @@
             data() {
                 return {
                     email: '',
-                    password: ''
+                    password: '',
+                    usuarios: [],
+                    isLoggedIn: false,  
                 };
             },
+            mounted() {
+               
+                this.cargarUsuarios();
+            },
             methods: {
-                async login() {
+                async cargarUsuarios() {
                     try {
-                        const archivo = await fetch('usuario.json');
-                        const email = await archivo.json();
-
-
-                        const usuarioValido = email.map(user => {
-                            if (user.usuario === this.usuario && user.password === this.password) {
-                                return true;
-                            }
-                            return false;
-                        }).includes(true);
-
-                        if (usuarioValido) {
-                           alert('Login exitoso!')
-
-
-                        } else {
-                            alert('Usuario o contraseña incorrectos')
-                        }
+                        const response = await fetch('usuario.json');
+                        const data = await response.json();
+                        this.usuarios = data;
                     } catch (error) {
                         console.error('Error al cargar el archivo JSON', error);
-                        this.mensaje = 'Error al procesar el login';
                     }
-                }
+                },
+                login() {
+                    let usuarioValido = null;
+    
+                    for (let i = 0; i < this.usuarios.length; i++) {
+                        const user = this.usuarios[i];
+                        if (user.email === this.email && user.password === this.password) {
+                            usuarioValido = user;
+                            break;  
+                        }
+                    }
+
+                    if (usuarioValido) {
+                        alert('Login exitoso!');
+                        sessionStorage.setItem('usuario', JSON.stringify(usuarioValido));
+                        this.isLoggedIn = true;  
+                    } else {
+                        alert('Usuario o contraseña incorrectos');
+                    }
+                },
+               
             }
         });
 
         app.mount('#app');
     </script>
 </body>
-
 </html>
