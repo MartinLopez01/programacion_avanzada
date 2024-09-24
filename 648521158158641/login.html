@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
+
 <body>
     <div id="app">
         <h1>Acceder</h1>
@@ -22,56 +24,145 @@
                 </fieldset>
 
                 <button type="submit">Iniciar Sesión</button>
-               
+
             </form>
         </div>
 
         <div v-else>
             <h2>Bienvenido, {{ email }}</h2>
 
-                <h2>Usuarios registrados</h2>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>Correo</th>
-                            <th>Contraseña</th>
-                            <th>Nombre</th>
-                            <th>Edad</th>
-                            <th>Genero</th>
-                            <th>Balance</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="usuario in usuarios" :key="usuario.email">
-                            <td>{{ usuario.email }}</td>
-                            <td>{{ usuario.password }}</td>
-                            <td>{{ usuario.name }}</td>
-                            <td>{{ usuario.age }}</td>
-                            <td>{{ usuario.gender }}</td>
-                            <td>{{ usuario.balance }}</td>
-                            <td>
-                                <button @click="">Editar</button>
-                                <button @click="">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h2>Usuarios registrados</h2>
+            <button @click="mostrarUsuario">Agregar</button>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Correo</th>
+                        <th>Contraseña</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Genero</th>
+                        <th>Balance</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="usuario in usuarios" :key="usuario.email">
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.password }}</td>
+                        <td>{{ usuario.name }}</td>
+                        <td>{{ usuario.age }}</td>
+                        <td>{{ usuario.gender }}</td>
+                        <td>{{ usuario.balance }}</td>
+                        <td>
+                            <button @click="editarUsuario(usuario)">Editar</button>
+                            <button @click="eliminarUsuario(usuario.email)">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div v-if="nuevoUsuario">
+                <h3>Agregar usuario</h3>
+                <form @submit.prevent="usuarioNuevo">
+                    <fieldset>
+                        <h2>Correo</h2>
+                        <input v-model="agregarUsuario.email" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Contraseña</h2>
+                        <input v-model="agregarUsuario.password" type="password" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Nombre</h2>
+                        <input v-model="agregarUsuario.name" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Edad</h2>
+                        <input v-model="agregarUsuario.age" type="number" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Genero</h2>
+                        <input v-model="agregarUsuario.gender" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Monto</h2>
+                        <input v-model="agregarUsuario.balance" type="number" required />
+                    </fieldset>
+
+                    <button type="submit">Agregar</button>
+                    <button @click="cancelarEdicion" class="cancel-button">Cancelar</button>
+                </form>
+            </div>
+
+            <div v-if="usuarioSeleccionado">
+                <h3>Editar usuario</h3>
+                <form @submit.prevent="actualizarUsuario">
+                    <fieldset>
+                        <h2>Correo</h2>
+                        <input v-model="usuarioSeleccionado.email" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Contraseña</h2>
+                        <input v-model="usuarioSeleccionado.password" type="password" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Nombre</h2>
+                        <input v-model="usuarioSeleccionado.name" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Edad</h2>
+                        <input v-model="usuarioSeleccionado.age" type="number" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Genero</h2>
+                        <input v-model="usuarioSeleccionado.gender" required />
+                    </fieldset>
+
+                    <fieldset>
+                        <h2>Monto</h2>
+                        <input v-model="usuarioSeleccionado.balance" type="number" required />
+                    </fieldset>
+
+                    <button type="submit">Guardar Cambios</button>
+                    <button @click="cancelarEdicion" class="cancel-button">Cancelar</button>
+                </form>
+            </div>
         </div>
+
     </div>
 
     <script>
         const app = Vue.createApp({
+
+
             data() {
                 return {
-                    email: '',
-                    password: '',
+                    email: 'pedro.vargas@gmail.com',
+                    password: 'si',
                     usuarios: [],
-                    isLoggedIn: false,  
+                    isLoggedIn: false,
+                    usuarioSeleccionado: null,
+                    nuevoUsuario: false,
+                    agregarUsuario: {
+                        email: '',
+                        password: '',
+                        name: '',
+                        age: null,
+                        gender: '',
+                        balance: null
+                    }
                 };
             },
             mounted() {
-               
+
                 this.cargarUsuarios();
             },
             methods: {
@@ -86,28 +177,72 @@
                 },
                 login() {
                     let usuarioValido = null;
-    
+
                     for (let i = 0; i < this.usuarios.length; i++) {
                         const user = this.usuarios[i];
                         if (user.email === this.email && user.password === this.password) {
                             usuarioValido = user;
-                            break;  
+                            break;
                         }
                     }
 
                     if (usuarioValido) {
                         alert('Login exitoso!');
                         sessionStorage.setItem('usuario', JSON.stringify(usuarioValido));
-                        this.isLoggedIn = true;  
+                        this.isLoggedIn = true;
                     } else {
                         alert('Usuario o contraseña incorrectos');
                     }
                 },
-               
+                mostrarUsuario() {
+                    this.nuevoUsuario = true;
+
+
+                },
+                usuarioNuevo() {
+                    if (this.agregarUsuario.email && this.agregarUsuario.password) {
+                        this.usuarios.push({ ...this.agregarUsuario });
+                        alert('Usuario agregado');
+                        this.cancelarEdicion();
+                    }
+                },
+                editarUsuario(usuario) {
+                    
+                    this.usuarioSeleccionado = { ...usuario };
+                },
+                actualizarUsuario() {
+                    
+                    const index = this.usuarios.findIndex(user => user.email === this.usuarioSeleccionado.email);
+                    if (index !== -1) {
+                        this.usuarios[index] = { ...this.usuarioSeleccionado };
+                        alert('Usuario actualizado correctamente');
+                        this.usuarioSeleccionado = null; 
+                    }
+                },
+                cancelarEdicion() {
+                    
+                    this.usuarioSeleccionado = null;
+                    this.nuevoUsuario = false;
+                    agregarUsuario = {
+                        email: '',
+                        password: '',
+                        name: '',
+                        age: null,
+                        gender: '',
+                        balance: null
+                    };
+                },
+                eliminarUsuario(email) {
+                    
+                    this.usuarios = this.usuarios.filter(user => user.email !== email);
+                    alert('Usuario eliminado');
+                }
+
             }
         });
 
         app.mount('#app');
     </script>
 </body>
+
 </html>
