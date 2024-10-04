@@ -1,0 +1,45 @@
+body {
+  background-color: #612977;
+}
+h1 {
+  background-color: #43d711;
+}
+legend {
+  color: #28b41b, #1b35b4, #b41b93, #572ac8, #1bb4ac;
+}
+ul li:nth-child(0) {
+  background-color: extract(#28b41b, #1b35b4, #b41b93, #572ac8, #1bb4ac, 0);
+  border-style: dotted;
+  border-width: 2px;
+}
+ul li:nth-child(1) {
+  background-color: #28b41b;
+  border-style: dotted;
+  border-width: 2px;
+}
+ul li:nth-child(2) {
+  background-color: #1b35b4;
+  border-style: dotted;
+  border-width: 2px;
+}
+ul li:nth-child(3) {
+  background-color: #b41b93;
+  border-style: dotted;
+  border-width: 2px;
+}
+ul li:nth-child(4) {
+  background-color: #572ac8;
+  border-style: dotted;
+  border-width: 2px;
+}
+ul li:nth-child(5) {
+  background-color: #1bb4ac;
+  border-style: dotted;
+  border-width: 2px;
+}
+button {
+  border-radius: 6px;
+}
+a {
+  color: #000;
+}

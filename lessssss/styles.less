@@ -1,0 +1,38 @@
+@colors: #28b41b,#1b35b4,#b41b93,#572ac8,#1bb4ac;
+
+body {
+    
+    background-color: #612977;
+    
+}
+
+h1{
+    background-color: #43d711;
+}
+
+legend{
+    color: @colors;
+}
+
+.cont(@count)when(@count <6){
+li:nth-child(@{count}){
+    background-color: extract(@colors,@count);
+
+    border-style:dotted;
+    border-width: 2px;
+}
+    .cont((@count + 1));
+
+}
+
+ul{
+    .cont(0);
+}
+button{
+    border-radius: 6px;
+}
+a{
+    
+    color: #000;
+
+}
